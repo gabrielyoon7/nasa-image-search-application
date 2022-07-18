@@ -20,7 +20,7 @@ export default () => {
             .then((response) => {
                 setData(response.data.collection.items);
                 setLoaded(true);
-                console.log(JSON.stringify(response))
+                // console.log(JSON.stringify(response))
             }).catch(function (error) {
                 console.log(error);
             });
@@ -59,12 +59,12 @@ export default () => {
                     {
                         isLoaded
                             ?
-                            // <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
-                            //     {data && data.map((image) => <ImageCard key={Math.random()} image={image} />)}
-                            // </div>
-                            <div>
-                                {data && data.map((image) => <Log key={Math.random()} image={image} />)}
+                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+                                {data && data.map((image) => <ImageCard key={Math.random()} image={image} />)}
                             </div>
+                            // <div>
+                            //     {data && data.map((image) => <Log key={Math.random()} image={image} />)}
+                            // </div>
                             :
                             <LoadingSpinner />
                     }

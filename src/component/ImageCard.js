@@ -1,7 +1,10 @@
 export default (props) => {
     const href = props.image.href
-    const data = props.image.data.length>0?props.image.data[0]:null; //잠재적인 문제 발생 가능
-    const links = props.image.links.length>0?props.image.links[0]:null; //잠재적인 문제 발생 가능
+    const data = props.image.data[0]; //잠재적인 문제 발생 가능
+    let links = '#'; //잠재적인 문제 발생 가능
+    if(data.media_type=='image'){
+        links = props.image.links[0]
+    }
     const yymmdd = (t) => {
         const date = new Date(Date.parse(t))
         const year = date.getFullYear()
@@ -12,7 +15,7 @@ export default (props) => {
     return (
         <>
             {
-                (data != null && links != null) &&
+                data.media_type=='image'&&
                 <div className="col">
                     <div className="card shadow-sm super-rounded h-100">
                         <img className="bd-placeholder-img card-img-top" width="100%" height="225" src={links.href} />

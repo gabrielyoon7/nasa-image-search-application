@@ -4,6 +4,7 @@ import ImageCard from "../component/ImageCard"
 import LoadingSpinner from "../component/LoadingSpinner"
 import Log from "../component/Log"
 import Header from "./Header"
+import { Link } from 'react-router-dom';
 
 export default () => {
 
@@ -97,9 +98,9 @@ export default () => {
         <>
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
-                    <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                    <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                         <span className="fs-4">🚀 nasa-image-search-application</span>
-                    </a>
+                    </Link>
                     <div className="col-12 col-lg-auto mb-3 mb-lg-0">
                         <div className="input-group mb-3">
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="검색어를 입력하세요" aria-label="검색어를 입력하세요" aria-describedby="button-addon2" />

@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import ImageCard from "../component/ImageCard"
 import LoadingSpinner from "../component/LoadingSpinner"
+import Log from "../component/Log"
 import Header from "./Header"
 
 export default () => {
@@ -47,6 +48,9 @@ export default () => {
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="검색어를 입력하세요" aria-label="검색어를 입력하세요" aria-describedby="button-addon2" />
                             <button onClick={() => search()} className="btn btn-outline-secondary" type="button" id="button-addon2">🔎</button>
                         </div>
+                        <div className="input-group mb-3">
+                            <input onChange={handleQuery} type="text" className="form-control" placeholder="페이지 내에서 검색하기" aria-label="페이지 내에서 검색하기" aria-describedby="button-addon2" />
+                        </div>
                     </div>
                 </div>
             </header>
@@ -55,8 +59,11 @@ export default () => {
                     {
                         isLoaded
                             ?
-                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                                {data && data.map((image) => <ImageCard image={image} />)}
+                            // <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+                            //     {data && data.map((image) => <ImageCard key={Math.random()} image={image} />)}
+                            // </div>
+                            <div>
+                                {data && data.map((image) => <Log key={Math.random()} image={image} />)}
                             </div>
                             :
                             <LoadingSpinner />

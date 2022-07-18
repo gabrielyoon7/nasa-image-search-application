@@ -1,4 +1,4 @@
-.description {
+.text-wrap {
     height: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -13,4 +13,8 @@
 
 .bg-blue {
     background-color: rgba(28, 44, 91);
+}
+
+.card-size{
+    height: 450px;
 }

@@ -1,0 +1,16 @@
+.description {
+    height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
+.super-rounded{
+    border-radius: 1rem !important;
+}
+
+.bg-blue {
+    background-color: rgba(28, 44, 91);
+}

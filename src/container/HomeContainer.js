@@ -61,6 +61,7 @@ export default () => {
 
     const search = () => {
         setLoaded(false);
+        setData([]);
         searchData();
         setQuery('');
     }

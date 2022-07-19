@@ -11,7 +11,9 @@ export default () => {
 
     const [isLoaded, setLoaded] = useState(false);
     const [data, setData] = useState([]);
+    const [selectedData, setSelectedData] = useState(null);
     const [query, setQuery] = useState('america');
+
 
     useEffect(() => {
         searchData();
@@ -119,7 +121,7 @@ export default () => {
                         isLoaded
                             ?
                             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch" onScroll={handleScroll}>
-                                {data && data.map((image) => <ImageCard key={Math.random()} image={image} />)}
+                                {data && data.map((image) => <ImageCard key={Math.random()} image={image} setSelectedData = {setSelectedData} />)}
                             </div>
                             // <div>
                             //     {data && data.map((image) => <Log key={Math.random()} image={image} />)}
@@ -130,7 +132,7 @@ export default () => {
                 </div>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <ArticleModal/>
+                    <ArticleModal selectedData={selectedData}/>
                 </div>
             </div>
         </>

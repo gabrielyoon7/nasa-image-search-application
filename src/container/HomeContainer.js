@@ -112,13 +112,13 @@ export default () => {
                         <span className="fs-4">🚀 NASA Image Search Application</span>
                     </Link>
                     <div className="col-12 col-lg-auto mb-3 mb-lg-0">
-                        <div className="input-group">
+                        <div className="input-group my-2">
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
                             <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2">🔎</button>
                         </div>
                     </div>
                 </div>
-                {/* <hr/> */}
+                <hr/>
             </header>
             <div className="">
                 <div className="container">

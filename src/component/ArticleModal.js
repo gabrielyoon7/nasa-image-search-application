@@ -20,7 +20,6 @@ export default (props) => {
                             </div>
                             <div className="modal-body py-0">
                                 <img className="bd-placeholder-img card-img-top" width="100%" height="100%" src={data.links[0].href && data.links[0].href} />
-                                {/* <p>{JSON.stringify(data)}</p> */}
                                 <div className="card-body">
                                     <span className="badge bg-blue mx-1">{data.data[0].center && data.data[0].center}</span>
                                     <span className="badge bg-blue mx-1">{data.data[0].nasa_id && data.data[0].nasa_id}</span>
@@ -29,7 +28,7 @@ export default (props) => {
                                     <div className=""><h6>{data.data[0].location && 'At ' + data.data[0].location}</h6></div>
                                     <div className=""><h6>{data.data[0].date_created && yymmdd(data.data[0].date_created)}</h6></div>
                                     <hr/>
-                                    <p className="card-text">{data.data[0].description}</p>
+                                    <p className="card-text" style={{"minHeight":"500px"}}>{data.data[0].description}</p>
                                     <hr/>
                                     <div>
                                         {

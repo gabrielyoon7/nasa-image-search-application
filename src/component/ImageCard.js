@@ -1,5 +1,4 @@
 export default (props) => {
-    const href = props.image.href
     const data = props.image.data[0]; //잠재적인 문제 발생 가능
     let links = '#'; //잠재적인 문제 발생 가능
     if (data.media_type == 'image') {

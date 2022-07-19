@@ -89,11 +89,12 @@ export default () => {
 
     const handleScroll = (e) => {
         const { offsetHeight, scrollTop, scrollHeight } = e.target
+        console.log(e.target);
         console.log(offsetHeight);
         console.log(scrollTop);
         console.log(scrollHeight);
         if (offsetHeight + scrollTop === scrollHeight) {
-            setPage(data.length)
+            setPage(data.length+1)
         }
     }
 
@@ -117,22 +118,24 @@ export default () => {
             </header>
             <div className="bg-light">
                 <div className="container">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch" onScroll={handleScroll}>
+                        {data && data.map((image) => <ImageCard key={Math.random()} image={image} setSelectedData={setSelectedData} />)}
+                    </div>
+                    {/* <div>
+                        {data && data.map((image) => <Log key={Math.random()} image={image} />)}
+                    </div> */}
                     {
+                        // 추가 리스트가 불러와짐을 여기서 보여주기 위함
                         isLoaded
                             ?
-                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch" onScroll={handleScroll}>
-                                {data && data.map((image) => <ImageCard key={Math.random()} image={image} setSelectedData = {setSelectedData} />)}
-                            </div>
-                            // <div>
-                            //     {data && data.map((image) => <Log key={Math.random()} image={image} />)}
-                            // </div>
+                            <div></div>
                             :
                             <LoadingSpinner />
                     }
                 </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <ArticleModal selectedData={selectedData}/>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <ArticleModal selectedData={selectedData} />
                 </div>
             </div>
         </>

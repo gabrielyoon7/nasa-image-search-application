@@ -18,18 +18,18 @@ export default (props) => {
                 <div className="col">
                     <div className="card shadow-sm super-rounded h-100">
                         <a href="#" className="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>props.setSelectedData(props.image)}>
-                            <img className="bd-placeholder-img card-img-top" width="100%" height="225" src={links.href} />
+                            <img className="bd-placeholder-img card-img-top" width="100%" height="225" src={links.href && links.href} />
                             <div className="card-body">
                                 <div className="d-flex justify-content-between">
                                     <div>
-                                        <span className="badge bg-success">{data.center}</span>
+                                        <span className="badge bg-success">{data.center && data.center}</span>
                                     </div>
                                     <div>
-                                        <span className="badge bg-blue">{yymmdd(data.date_created)}</span>
+                                        <span className="badge bg-blue">{data.date_created && yymmdd(data.date_created)}</span>
                                     </div>
                                 </div>
-                                <div className="text-wrap"><h3>{data.title}</h3></div>
-                                <p className="card-text text-wrap">{data.description}</p>
+                                <div className="text-wrap"><h3>{data.title && data.title}</h3></div>
+                                <p className="card-text text-wrap">{data.description && data.description}</p>
                             </div>
                         </a>
                     </div>

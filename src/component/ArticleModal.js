@@ -34,7 +34,7 @@ export default (props) => {
                                     <div>
                                         {
                                             data.data[0].keywords &&
-                                            data.data[0].keywords.map((keyword) => <span key={Math.random()} className="badge bg-dark mx-1">{'# ' + keyword}</span>)
+                                            data.data[0].keywords.map((keyword) => <span key={Math.random()} className="badge bg-light text-dark mx-1">{'# ' + keyword}</span>)
                                         }
                                     </div>
                                 </div>

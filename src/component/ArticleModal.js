@@ -19,21 +19,21 @@ export default (props) => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body py-0">
-                                <img className="bd-placeholder-img card-img-top" width="100%" height="100%" src={data.links[0].href} />
+                                <img className="bd-placeholder-img card-img-top" width="100%" height="100%" src={data.links[0].href && data.links[0].href} />
                                 {/* <p>{JSON.stringify(data)}</p> */}
                                 <div className="card-body">
-                                    <span className="badge bg-blue mx-1">{data.data[0].center}</span>
-                                    <span className="badge bg-blue mx-1">{data.data[0].nasa_id}</span>
-                                    <div className=""><h1>{data.data[0].title}</h1></div>
-                                    <div className=""><h5>By {data.data[0].photographer}</h5></div>
-                                    <div className=""><h6>At {data.data[0].location}</h6></div>
-                                    <div className=""><h6>{yymmdd(data.data[0].date_created)}</h6></div>
+                                    <span className="badge bg-blue mx-1">{data.data[0].center && data.data[0].center}</span>
+                                    <span className="badge bg-blue mx-1">{data.data[0].nasa_id && data.data[0].nasa_id}</span>
+                                    <div className=""><h1>{data.data[0].title && data.data[0].title}</h1></div>
+                                    <div className=""><h5>{data.data[0].photographer && 'By ' + data.data[0].photographer}</h5></div>
+                                    <div className=""><h6>{data.data[0].location && 'At ' + data.data[0].location}</h6></div>
+                                    <div className=""><h6>{data.data[0].date_created && yymmdd(data.data[0].date_created)}</h6></div>
                                     <hr/>
                                     <p className="card-text">{data.data[0].description}</p>
                                     <hr/>
                                     <div>
                                         {
-                                            data.data[0].keywords.length > 0 &&
+                                            data.data[0].keywords &&
                                             data.data[0].keywords.map((keyword) => <span key={Math.random()} className="badge bg-dark mx-1">{'# ' + keyword}</span>)
                                         }
                                     </div>

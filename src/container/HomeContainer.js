@@ -64,6 +64,9 @@ export default () => {
     const search = () => {
         setLoaded(false);
         setData([]);
+        if(query==''){
+            setQuery('america');
+        }
         searchData();
         setQuery('');
     }

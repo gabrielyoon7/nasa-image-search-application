@@ -5,6 +5,7 @@ import LoadingSpinner from "../component/LoadingSpinner"
 import Log from "../component/Log"
 import Header from "./Header"
 import { Link } from 'react-router-dom';
+import ArticleModal from "../component/ArticleModal"
 
 export default () => {
 
@@ -69,13 +70,13 @@ export default () => {
             setLoaded(false);
             try {
                 await axios.get('https://images-api.nasa.gov/search?q=' + query + '&page=' + page)
-                .then((response) => {
-                    setData([...data, ...response.data.collection.items]);
-                    setLoaded(true);
-                    // console.log(JSON.stringify(response))
-                }).catch(function (error) {
+                    .then((response) => {
+                        setData([...data, ...response.data.collection.items]);
+                        setLoaded(true);
+                        // console.log(JSON.stringify(response))
+                    }).catch(function (error) {
 
-                });
+                    });
             } catch (e) {
 
             }
@@ -85,7 +86,7 @@ export default () => {
     }, [page])
 
     const handleScroll = (e) => {
-        const { offsetHeight, scrollTop, scrollHeight} = e.target
+        const { offsetHeight, scrollTop, scrollHeight } = e.target
         console.log(offsetHeight);
         console.log(scrollTop);
         console.log(scrollHeight);
@@ -128,6 +129,9 @@ export default () => {
                     }
                 </div>
 
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <ArticleModal/>
+                </div>
             </div>
         </>
     )

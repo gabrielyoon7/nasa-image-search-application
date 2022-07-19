@@ -17,7 +17,7 @@ export default (props) => {
                 data.media_type == 'image' &&
                 <div className="col">
                     <div className="card shadow-sm super-rounded h-100">
-                        <a href="#" className="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>props.setSelectedData(props.image)}>
+                        <a href="#" className="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#article-modal" onClick={()=>props.setSelectedData(props.image)}>
                             <img className="bd-placeholder-img card-img-top" width="100%" height="225" src={links.href && links.href} />
                             <div className="card-body">
                                 <div className="d-flex justify-content-between">

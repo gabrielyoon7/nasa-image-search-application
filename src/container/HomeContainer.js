@@ -3,9 +3,9 @@ import { useEffect, useState } from "react"
 import ImageCard from "../component/ImageCard"
 import LoadingSpinner from "../component/LoadingSpinner"
 import Log from "../component/Log"
-import Header from "./Header"
 import { Link } from 'react-router-dom';
-import ArticleModal from "../component/ArticleModal"
+import ArticleModal from "./modal/ArticleModal"
+import SearchModal from "./modal/SearchModal"
 
 export default () => {
 
@@ -13,7 +13,6 @@ export default () => {
     const [data, setData] = useState([]);
     const [selectedData, setSelectedData] = useState(null);
     const [query, setQuery] = useState('america');
-
 
     useEffect(() => {
         searchData();
@@ -64,44 +63,44 @@ export default () => {
     const search = () => {
         setLoaded(false);
         setData([]);
-        if(query==''){
+        if (query === '') {
             setQuery('america');
         }
         searchData();
         setQuery('');
     }
 
-    const [page, setPage] = useState(1)
+    // const [page, setPage] = useState(1)
 
-    useEffect(() => {
-        const fetchTodos = async () => {
-            setLoaded(false);
-            try {
-                await axios.get('https://images-api.nasa.gov/search?q=' + query + '&page=' + page)
-                    .then((response) => {
-                        setData([...data, ...response.data.collection.items]);
-                        setLoaded(true);
-                        // console.log(JSON.stringify(response))
-                    }).catch(function (error) {
+    // useEffect(() => {
+    //     const fetchTodos = async () => {
+    //         setLoaded(false);
+    //         try {
+    //             await axios.get('https://images-api.nasa.gov/search?q=' + query + '&page=' + page)
+    //                 .then((response) => {
+    //                     setData([...data, ...response.data.collection.items]);
+    //                     setLoaded(true);
+    //                     // console.log(JSON.stringify(response))
+    //                 }).catch(function (error) {
 
-                    });
-            } catch (e) {
+    //                 });
+    //         } catch (e) {
 
-            }
-        }
-        console.log(page)
-        fetchTodos()
-    }, [page])
+    //         }
+    //     }
+    //     console.log(page)
+    //     fetchTodos()
+    // }, [page])
 
     const handleScroll = (e) => {
-        const { offsetHeight, scrollTop, scrollHeight } = e.target
-        console.log(e.target);
-        console.log(offsetHeight);
-        console.log(scrollTop);
-        console.log(scrollHeight);
-        if (offsetHeight + scrollTop === scrollHeight) {
-            setPage(data.length + 1)
-        }
+        // const { offsetHeight, scrollTop, scrollHeight } = e.target
+        // console.log(e.target);
+        // console.log(offsetHeight);
+        // console.log(scrollTop);
+        // console.log(scrollHeight);
+        // if (offsetHeight + scrollTop === scrollHeight) {
+        //     setPage(data.length + 1)
+        // }
     }
 
     return (
@@ -114,11 +113,12 @@ export default () => {
                     <div className="col-12 col-lg-auto mb-3 mb-lg-0">
                         <div className="input-group my-2">
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
-                            <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2">🔎</button>
+                            <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-search"></i></button>
+                            <button data-bs-toggle="modal" data-bs-target="#search-modal" className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-filter"></i></button>
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr />
             </header>
             <div className="">
                 <div className="container">
@@ -137,10 +137,11 @@ export default () => {
                         :
                         <LoadingSpinner />
                 }
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    {
-                        <ArticleModal selectedData={selectedData} />
-                    }
+                <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <ArticleModal selectedData={selectedData} />
+                </div>
+                <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <SearchModal setData={setData} setLoaded={setLoaded}/>
                 </div>
             </div>
         </>

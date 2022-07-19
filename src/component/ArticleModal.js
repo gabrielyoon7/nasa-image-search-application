@@ -6,32 +6,38 @@ export default (props) => {
         const day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay()
         return year + '-' + month + '-' + day
     }
+    const data = props.selectedData;
     return (
         <>
             <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div className="modal-content super-rounded shadow">
                     {
-                        props.selectedData &&
+                        data &&
                         <>
                             <div className="modal-header border-bottom-0">
                                 <h5 className="modal-title"></h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body py-0">
-                                <img className="bd-placeholder-img card-img-top" width="100%" height="100%" src={props.selectedData.links[0].href} />
-                                {/* <p>{JSON.stringify(props.selectedData)}</p> */}
+                                <img className="bd-placeholder-img card-img-top" width="100%" height="100%" src={data.links[0].href} />
+                                {/* <p>{JSON.stringify(data)}</p> */}
                                 <div className="card-body">
-                                <div className="d-flex justify-content-between">
+                                    <span className="badge bg-blue mx-1">{data.data[0].center}</span>
+                                    <span className="badge bg-blue mx-1">{data.data[0].nasa_id}</span>
+                                    <div className=""><h1>{data.data[0].title}</h1></div>
+                                    <div className=""><h5>By {data.data[0].photographer}</h5></div>
+                                    <div className=""><h6>At {data.data[0].location}</h6></div>
+                                    <div className=""><h6>{yymmdd(data.data[0].date_created)}</h6></div>
+                                    <hr/>
+                                    <p className="card-text">{data.data[0].description}</p>
+                                    <hr/>
                                     <div>
-                                        <span className="badge bg-success">{props.selectedData.data[0].center}</span>
-                                    </div>
-                                    <div>
-                                        <span className="badge bg-blue">{yymmdd(props.selectedData.data[0].date_created)}</span>
+                                        {
+                                            data.data[0].keywords.length > 0 &&
+                                            data.data[0].keywords.map((keyword) => <span key={Math.random()} className="badge bg-dark mx-1">{'# ' + keyword}</span>)
+                                        }
                                     </div>
                                 </div>
-                                <div className=""><h3>{props.selectedData.data[0].title}</h3></div>
-                                <p className="card-text">{props.selectedData.data[0].description}</p>
-                            </div>
                             </div>
                             <div className="modal-footer flex-column border-top-0">
                                 <button type="button" className="btn btn-lg btn-light w-100 mx-0" data-bs-dismiss="modal">Close</button>

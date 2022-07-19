@@ -52,6 +52,8 @@ export default () => {
                         alert('etc');
                         break;
                 }
+                setQuery('america');
+                setLoaded(true);
             });
     }
 
@@ -95,7 +97,7 @@ export default () => {
         console.log(scrollTop);
         console.log(scrollHeight);
         if (offsetHeight + scrollTop === scrollHeight) {
-            setPage(data.length+1)
+            setPage(data.length + 1)
         }
     }
 
@@ -104,20 +106,18 @@ export default () => {
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-                        <span className="fs-4">🚀 nasa-image-search-application</span>
+                        <span className="fs-4">🚀 NASA Image Search Application</span>
                     </Link>
                     <div className="col-12 col-lg-auto mb-3 mb-lg-0">
-                        <div className="input-group mb-3">
-                            <input onChange={handleQuery} type="text" className="form-control" placeholder="검색어를 입력하세요" aria-label="검색어를 입력하세요" aria-describedby="button-addon2" />
-                            <button onClick={() => search()} className="btn btn-outline-secondary" type="button" id="button-addon2">🔎</button>
+                        <div className="input-group">
+                            <input onChange={handleQuery} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
+                            <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2">🔎</button>
                         </div>
-                        {/* <div className="input-group mb-3">
-                            <input onChange={handleQuery} type="text" className="form-control" placeholder="페이지 내에서 검색하기" aria-label="페이지 내에서 검색하기" aria-describedby="button-addon2" />
-                        </div> */}
                     </div>
                 </div>
+                {/* <hr/> */}
             </header>
-            <div className="bg-light">
+            <div className="">
                 <div className="container">
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch" onScroll={handleScroll}>
                         {data && data.map((image) => <ImageCard key={Math.random()} image={image} setSelectedData={setSelectedData} />)}
@@ -125,16 +125,15 @@ export default () => {
                     {/* <div>
                         {data && data.map((image) => <Log key={Math.random()} image={image} />)}
                     </div> */}
-                    {
-                        // 추가 리스트가 불러와짐을 여기서 보여주기 위함
-                        isLoaded
-                            ?
-                            <div></div>
-                            :
-                            <LoadingSpinner />
-                    }
                 </div>
-
+                {
+                    // 추가 리스트가 불러와짐을 여기서 보여주기 위함
+                    isLoaded
+                        ?
+                        <div></div>
+                        :
+                        <LoadingSpinner />
+                }
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     {
                         <ArticleModal selectedData={selectedData} />

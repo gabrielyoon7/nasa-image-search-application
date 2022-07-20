@@ -178,7 +178,7 @@ export default () => {
 
     return (
         <>
-            <header className="py-3" ref={headerElementRef}>
+            <header className="py-3 shadow-sm " ref={headerElementRef}>
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none" onClick={() => window.location.reload()}>
                         <span className="fs-4">🚀 NASA Image Search Application</span>
@@ -193,7 +193,7 @@ export default () => {
                 </div>
             </header>
             <div style={{ "height": scrollHeight + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
-                <div className="">
+                <div className="mt-2">
                     <div className="container">
                         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch mb-5">
                             {data && data.map((image) =>

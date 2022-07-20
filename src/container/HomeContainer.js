@@ -17,7 +17,7 @@ export default () => {
         location: '',
         media_type: '',
         nasa_id: '',
-        page: '',
+        // page: '',
         photographer: '',
         secondary_creator: '',
         title: '',
@@ -29,6 +29,7 @@ export default () => {
     const [data, setData] = useState([]); //받아온 데이터를 담을 리스트
     const [query, setQuery] = useState(defaultQuery); //고급쿼리
     const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
+    const [page, setPage] = useState(1); //요청 페이지 관리용
 
     useEffect(() => {
         initData();
@@ -38,17 +39,18 @@ export default () => {
         const tempData = await searchData({
             ...defaultQuery,
             ['q']: 'america'
-        });
+        },1);
         await setData(tempData);
         setLoaded(true);
     }
 
-    const searchData = async (query) => {
-        if (query['page'] !== '' && !(Number(query['page']) >= 1)) {
-            alert('페이지는 반드시 1 이상이어야 합니다.')
-            return data
-        }
-        else if (query['year_start'] !== '' && !((Number(query['year_start']) >= 1000 && (Number(query['year_start']) <= 9999)))) {
+    const searchData = async (query, page) => {
+        // if (query['page'] !== '' && !(Number(query['page']) >= 1)) {
+        //     alert('페이지는 반드시 1 이상이어야 합니다.')
+        //     return data
+        // }
+        // else 
+        if (query['year_start'] !== '' && !((Number(query['year_start']) >= 1000 && (Number(query['year_start']) <= 9999)))) {
             alert('YYYY 형태여야 합니다.')
             return data
         }
@@ -61,14 +63,14 @@ export default () => {
         Object.keys(query).map((el) => { query[el] !== '' && (queryForURL += ('&' + el + '=' + query[el])) })
         // console.log('queryForURL : ' + queryForURL)
         if (queryForURL === '') {
-            alert('1개 항목 이상 입력해야 합니다.')
+            // alert('1개 항목 이상 입력해야 합니다.')
             return data
         }
-        if (queryForURL.includes('&page') && queryForURL.split('&').length - 1 === 1) {
-            alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
-            return data
-        }
-        const url = 'https://images-api.nasa.gov/search?' + queryForURL;
+        // if (queryForURL.includes('&page') && queryForURL.split('&').length - 1 === 1) {
+        //     alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
+        //     return data
+        // }
+        const url = 'https://images-api.nasa.gov/search?' + queryForURL + '&page='+page;
         let temp = [];
         await axios.get(url)
             .then((response) => {
@@ -112,21 +114,36 @@ export default () => {
 
     const search = async () => {
         setLoaded(false); //검색 버튼을 누르는 경우, 로드 중임을 알리기위해 false로 변경
+        setPage(1);
         setData([]); //새 검색 결과에는 어차피 데이터를 비워야 하기 때문에 일단 삭제
-        if (query === '') { //쿼리가 빈 상태로 검색하려는 경우 초기값으로 되돌려줌
-            setQuery({
-                ...defaultQuery,
-                ['q']: 'america'
-            });
-        }
-        const tempData = await searchData(query);
+        const tempData = await searchData(query, 1);
         await setData(tempData);
         setLoaded(true);
         setQuery(defaultQuery); //검색 끝났으니 쿼리 비우기
     }
 
+    useEffect(() => {
+        const moreImages = async () => {
+            setLoaded(false); //검색 버튼을 누르는 경우, 로드 중임을 알리기위해 false로 변경
+            const tempData = await searchData(query, page);
+            await setData([...data, ...tempData]);
+            setLoaded(true);    
+        }
+
+        console.log('page' + page)
+        moreImages()
+    }, [page]) //페이지가 변동(증가)하는 경우
+
+    const handleScroll = (e) => {
+        const { offsetHeight, scrollTop, scrollHeight } = e.target
+        if (isLoaded == true && (offsetHeight + scrollTop === scrollHeight)) { //스크롤이 바닥에 닿았을 때. (단, 로드 상태가 false 시 현재 이미 요청중이므로 true에만 요청을 허가한다.. )
+            setLoaded(false);
+            setPage(page + 1) // 다음 페이지로 변경
+        }
+    }
+
     return (
-        <div style={{ "height": window.screen.height + "px", "overflowY": "scroll" }}>
+        <div style={{ "height": window.screen.height + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none" onClick={() => window.location.reload()}>

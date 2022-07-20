@@ -4,8 +4,9 @@ import ImageCard from "../component/ImageCard"
 import LoadingSpinner from "../component/LoadingSpinner"
 import Log from "../component/Log"
 import { Link } from 'react-router-dom';
-import ArticleModal from "./modal/ArticleModal"
-import SearchModal from "./modal/SearchModal"
+import ArticleModal from "../component/modal/ArticleModal"
+import SearchModal from "../component/modal/SearchModal"
+import BookmarkModal from "../component/modal/BookmarkModal"
 
 export default () => {
     const defaultQuery = {
@@ -176,6 +177,7 @@ export default () => {
     }, [windowHeight])
     // 무한 스크롤의 스크롤 관련 코드 끝  (화면 크기 변경 시에도 안정적으로 스크롤이 가능 하게 도와줌)
 
+
     return (
         <>
             {/* 헤더 시작 */}
@@ -188,7 +190,8 @@ export default () => {
                         <div className="input-group my-2">
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
                             <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-search"></i></button>
-                            <button data-bs-toggle="modal" data-bs-target="#search-modal" className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-filter"></i></button>
+                            <button data-bs-toggle="modal" data-bs-target="#search-modal" className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-funnel-fill"></i></button>
+                            <button data-bs-toggle="modal" data-bs-target="#bookmark-modal" className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-bookmark-star"></i></button>
                         </div>
                     </div>
                 </div>
@@ -199,12 +202,14 @@ export default () => {
                 <div className="mt-2">
                     <div className="container">
                         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch mb-5">
-                            {data && data.map((image) =>
-                                <ImageCard
-                                    key={Math.random()}
-                                    image={image}
-                                    setSelectedData={setSelectedData}
-                                />)}
+                            {
+                                data && data.map((image) =>
+                                    <ImageCard
+                                        key={Math.random()}
+                                        image={image}
+                                        setSelectedData={setSelectedData}
+                                    />)
+                            }
                         </div>
                     </div>
                     {
@@ -213,11 +218,21 @@ export default () => {
                     }
                     <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         {/* 기사 보여주는 모달 */}
-                        <ArticleModal selectedData={selectedData} />
+                        <ArticleModal
+                            selectedData={selectedData}
+                        />
                     </div>
                     <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         {/* 상세 검색 모달 */}
                         <SearchModal
+                            query={query}
+                            setQuery={setQuery}
+                            search={search}
+                        />
+                    </div>
+                    <div className="modal fade" id="bookmark-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {/* 상세 검색 모달 */}
+                        <BookmarkModal
                             query={query}
                             setQuery={setQuery}
                             search={search}

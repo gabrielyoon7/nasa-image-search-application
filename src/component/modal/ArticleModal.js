@@ -7,6 +7,20 @@ export default (props) => {
         return year + '-' + month + '-' + day
     }
     const data = props.selectedData;
+    
+    const localStorage = window.localStorage;
+    const saveFavorite = (newData) => {
+        const prev = localStorage.getItem("bookmark")
+        if(prev==null){
+            console.log('it is empty');
+            JSON.parse(localStorage.getItem('key이름'));
+            localStorage.setItem("bookmark",JSON.stringify([].concat(newData)));
+        }
+        else{
+            console.log('something is pushed')
+            localStorage.setItem('bookmark',JSON.stringify(JSON.parse(prev).concat(newData)));
+        }
+    }
     return (
         <>
             <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -27,9 +41,9 @@ export default (props) => {
                                     <div className=""><h5>{data.data[0].photographer && 'By ' + data.data[0].photographer}</h5></div>
                                     <div className=""><h6>{data.data[0].location && 'At ' + data.data[0].location}</h6></div>
                                     <div className=""><h6>{data.data[0].date_created && yymmdd(data.data[0].date_created)}</h6></div>
-                                    <hr/>
-                                    <p className="card-text" style={{"minHeight":"500px"}}>{data.data[0].description}</p>
-                                    <hr/>
+                                    <hr />
+                                    <p className="card-text" style={{ "minHeight": "500px" }}>{data.data[0].description}</p>
+                                    <hr />
                                     <div>
                                         {
                                             data.data[0].keywords &&
@@ -38,8 +52,9 @@ export default (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="modal-footer flex-column border-top-0">
-                                <button type="button" className="btn btn-lg btn-light w-100 mx-0" data-bs-dismiss="modal">Close</button>
+                            <div className="modal-footer border-top-0 d-flex justify-content-between">
+                                <button type="button" className="col btn btn-lg btn-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="col btn btn-lg btn-success w-100 mx-1" onClick={()=>saveFavorite(data)}>Save</button>
                             </div>
                         </>
                     }

@@ -1,10 +1,20 @@
-.text-wrap {
-    height: 69px;
+.text-wrap-image-title {
+    /* height: 69px; */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
+    -webkit-line-clamp: 2;
+}
+.text-wrap-image-description {
+    /* height: 69px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    -webkit-line-clamp: 3;
 }
 
 .text-wrap-bookmark-title {

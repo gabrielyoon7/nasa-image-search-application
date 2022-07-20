@@ -30,8 +30,8 @@ const ImageCard = (props) => {
                                         <span className="badge bg-blue">{data.date_created && yymmdd(data.date_created)}</span>
                                     </div>
                                 </div>
-                                <div className="text-wrap"><h3>{data.title && data.title}</h3></div>
-                                <p className="card-text text-wrap">{data.description && data.description}</p>
+                                <div className="text-wrap-image-title "><h3>{data.title && data.title}</h3></div>
+                                <p className="card-text text-wrap-image-description">{data.description && data.description}</p>
                             </div>
                         </a>
                     </div>

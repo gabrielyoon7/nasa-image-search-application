@@ -9,7 +9,7 @@ export default (props) => {
     const data = props.selectedData;
     
     const localStorage = window.localStorage;
-    const saveFavorite = (newData) => {
+    const saveBookmark = (newData) => {
         const prev = localStorage.getItem("bookmark")
         if(prev==null){
             console.log('it is empty');
@@ -54,7 +54,7 @@ export default (props) => {
                             </div>
                             <div className="modal-footer border-top-0 d-flex justify-content-between">
                                 <button type="button" className="col btn btn-lg btn-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="col btn btn-lg btn-success w-100 mx-1" onClick={()=>saveFavorite(data)}>Save</button>
+                                <button type="button" className="col btn btn-lg btn-success w-100 mx-1" data-bs-dismiss="modal" onClick={()=>saveBookmark(data)}>Bookmark</button>
                             </div>
                         </>
                     }

@@ -88,7 +88,7 @@ export default () => {
 
             }
         }
-        console.log('page'+page)
+        console.log('page' + page)
         moreImages()
     }, [page])
 
@@ -96,14 +96,14 @@ export default () => {
         const { offsetHeight, scrollTop, scrollHeight } = e.target
         // console.log('(offsetHeight : '+offsetHeight+') + (scrollTop : '+scrollTop+') = '+(offsetHeight+scrollTop));
         // console.log(scrollHeight);
-        if (isLoaded==true && (offsetHeight + scrollTop === scrollHeight)) {
+        if (isLoaded == true && (offsetHeight + scrollTop === scrollHeight)) {
             // alert('it is end')
             setLoaded(false);
             setPage(page + 1)
         }
     }
     return (
-        <div style={{"height" : window.screen.height+"px", "overflowY":"auto"}} onScroll={handleScroll}>
+        <div style={{ "height": window.screen.height + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
@@ -130,17 +130,13 @@ export default () => {
                 </div>
                 {
                     // 추가 리스트가 불러와짐을 여기서 보여주기 위함
-                    isLoaded
-                        ?
-                        <div></div>
-                        :
-                        <LoadingSpinner />
+                    isLoaded ? <div></div> : <LoadingSpinner />
                 }
                 <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <ArticleModal selectedData={selectedData} />
                 </div>
                 <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <SearchModal setData={setData} setLoaded={setLoaded}/>
+                    <SearchModal setData={setData} setLoaded={setLoaded} />
                 </div>
             </div>
         </div>

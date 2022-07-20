@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ImageCard from "../component/ImageCard"
 import LoadingSpinner from "../component/LoadingSpinner"
 import Log from "../component/Log"
@@ -156,14 +156,34 @@ export default () => {
         }
     }
 
+    let headerElementRef = useRef(null);
+
+    const [windowHeight, setWindowSize] = useState(window.innerHeight);
+    const [scrollHeight, setScrollHeight] = useState(window.innerHeight-headerElementRef.current?.clientHeight);
+    const handleResize = () => {
+        setWindowSize(window.innerHeight)
+    }
+
+    useEffect(()=>{
+        window.addEventListener('resize', handleResize);
+        return ()=>{
+            window.removeEventListener('resize', handleResize);
+        }
+    })
+
+    useEffect(()=>{
+        setScrollHeight(windowHeight-headerElementRef.current?.clientHeight);
+    },[windowHeight])
+
+
     return (
-        <div style={{ "height": window.screen.height + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
-            <header className="py-3 mb-4">
+        <>
+            <header className="py-3" ref={headerElementRef}>
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none" onClick={() => window.location.reload()}>
                         <span className="fs-4">🚀 NASA Image Search Application</span>
                     </Link>
-                    <div className="col-12 col-lg-auto mb-3 mb-lg-0">
+                    <div className="col-12 col-lg-auto mb-lg-0">
                         <div className="input-group my-2">
                             <input onChange={handleQuery} type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
                             <button onClick={() => search()} className="btn btn-outline-dark" type="button" id="button-addon2"><i className="bi bi-search"></i></button>
@@ -171,36 +191,37 @@ export default () => {
                         </div>
                     </div>
                 </div>
-                <hr />
             </header>
-            <div className="">
-                <div className="container">
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch mb-5">
-                        {data && data.map((image) =>
-                            <ImageCard
-                                key={Math.random()}
-                                image={image}
-                                setSelectedData={setSelectedData}
-                            />)}
+            <div style={{ "height": scrollHeight + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
+                <div className="">
+                    <div className="container">
+                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch mb-5">
+                            {data && data.map((image) =>
+                                <ImageCard
+                                    key={Math.random()}
+                                    image={image}
+                                    setSelectedData={setSelectedData}
+                                />)}
+                        </div>
+                    </div>
+                    {
+                        // 추가 리스트가 불러와짐을 여기서 보여주기 위함... 무한 스크롤 시 바닥에 spinner를 붙이는 효과도 있음
+                        isLoaded ? <div></div> : <LoadingSpinner />
+                    }
+                    <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {/* 기사 보여주는 모달 */}
+                        <ArticleModal selectedData={selectedData} />
+                    </div>
+                    <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {/* 상세 검색 모달 */}
+                        <SearchModal
+                            query={query}
+                            setQuery={setQuery}
+                            search={search}
+                        />
                     </div>
                 </div>
-                {
-                    // 추가 리스트가 불러와짐을 여기서 보여주기 위함... 무한 스크롤 시 바닥에 spinner를 붙이는 효과도 있음
-                    isLoaded ? <div></div> : <LoadingSpinner />
-                }
-                <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    {/* 기사 보여주는 모달 */}
-                    <ArticleModal selectedData={selectedData} />
-                </div>
-                <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    {/* 상세 검색 모달 */}
-                    <SearchModal
-                        query={query}
-                        setQuery={setQuery}
-                        search={search}
-                    />
-                </div>
             </div>
-        </div>
+        </>
     )
 }

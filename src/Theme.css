@@ -7,7 +7,7 @@
     word-wrap: break-word;
 }
 
-.super-rounded{
+.super-rounded {
     border-radius: 1rem !important;
 }
 
@@ -15,6 +15,10 @@
     background-color: rgba(28, 44, 91);
 }
 
-.card-size{
+.card-size {
     height: 450px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }

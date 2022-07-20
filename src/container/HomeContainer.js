@@ -37,6 +37,67 @@ export default () => {
         searchData(); //페이지 첫 로드 시 데이터 불러오기
     }, [])
 
+    const advancedSearch = async () => {
+        if (advancedQuery['page'] !== '' && !(Number(advancedQuery['page']) >= 1)) {
+            alert('페이지는 반드시 1 이상이어야 합니다.')
+            return
+        }
+        else if (advancedQuery['year_start'] !== '' && !((Number(advancedQuery['year_start']) >= 1000 && (Number(advancedQuery['year_start']) <= 9999)))) {
+            alert('YYYY 형태여야 합니다.')
+            return
+        }
+        else if (advancedQuery['year_end'] !== '' && !((Number(advancedQuery['year_end']) >= 1000 && (Number(advancedQuery['year_end']) <= 9999)))) {
+            alert('YYYY 형태여야 합니다.')
+            return
+        }
+
+        let query = ''
+        Object.keys(advancedQuery).map((el) => { advancedQuery[el] !== '' && (query += ('&' + el + '=' + advancedQuery[el])) })
+        console.log(query)
+        if (query === '') {
+            alert('1개 항목 이상 입력해야 합니다.')
+            return
+        }
+        if (query.includes('&page') && query.split('&').length - 1 === 1) {
+            alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
+            return
+        }
+        setLoaded(false);
+        setData([]);
+        const url = 'https://images-api.nasa.gov/search?' + query;
+        await axios.get(url)
+            .then((response) => {
+                setData(response.data.collection.items);
+                setLoaded(true);
+            }).catch(function (error) {
+                console.log(error.response.status)
+                switch (error.response.status) {
+                    case 400:
+                        alert('Bad Request! The request was unacceptable, often due to missing a required parameter.');
+                        break;
+                    case 404:
+                        alert('The requested resource doesn’t exist.')
+                        break
+                    case 500:
+                        alert('Something went wrong on the API’s end. (These are rare.)')
+                        break
+                    case 502:
+                        alert('Something went wrong on the API’s end. (These are rare.)')
+                        break
+                    case 503:
+                        alert('Something went wrong on the API’s end. (These are rare.)')
+                        break
+                    case 504:
+                        alert('Something went wrong on the API’s end. (These are rare.)')
+                        break
+                    default:
+                        alert('etc');
+                        break;
+                }
+                setLoaded(true);
+            });
+    }
+
     const searchData = async () => {
         setPage(1) //새로운 요청 때 마다 페이지를 1로 고정하는 역할
         await axios.get('https://images-api.nasa.gov/search?q=' + query)
@@ -152,6 +213,7 @@ export default () => {
                      setLoaded={setLoaded} 
                      advancedQuery={advancedQuery}
                      setAdvancedQuery={setAdvancedQuery}
+                     advancedSearch={advancedSearch}
                      />
                 </div>
             </div>

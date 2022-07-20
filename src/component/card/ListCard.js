@@ -12,10 +12,10 @@ export default (props) => {
                 props.image &&
                 <a href="#" className="list-group-item list-group-item-action py-3 lh-sm"  data-bs-toggle="modal" data-bs-target="#article-modal" onClick={()=>props.setSelectedData(props.image)}>
                     <div className="d-flex w-100 align-items-center justify-content-between">
-                        <strong className="mb-1">{props.image.data[0].title}</strong>
-                        <small className="text-muted">{yymmdd(props.image.data[0].date_created)}</small>
+                        <strong className="mb-1 text-wrap-bookmark-title ">{props.image.data[0].title}</strong>
+                        <small className="text-muted text-end text-wrap-bookmark-time">{yymmdd(props.image.data[0].date_created)}</small>
                     </div>
-                    <div className="col-10 mb-1 small">{props.image.data[0].description}</div>
+                    <div className="col-10 mb-1 small text-wrap-bookmark-description ">{props.image.data[0].description}</div>
                 </a>
             }
         </>

@@ -7,6 +7,33 @@
     word-wrap: break-word;
 }
 
+.text-wrap-bookmark-title {
+    height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
+.text-wrap-bookmark-description {
+    height: 38px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
+.text-wrap-bookmark-time {
+    width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
+
 .super-rounded {
     border-radius: 1rem !important;
 }

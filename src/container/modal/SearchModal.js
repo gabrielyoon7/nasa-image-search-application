@@ -69,12 +69,12 @@ export default (props) => {
                         </div>
                         <input type="text" className="form-control" aria-label="Text input with radio button" value={query.nasa_id} id="nasa_id" onChange={handleQuery} />
                     </div>
-                    <div className="input-group">
+                    {/* <div className="input-group">
                         <div className="input-group-text py-2">
                             <span className="my-0">page</span>
                         </div>
                         <input type="number" className="form-control" aria-label="Text input with radio button" value={query.page} id="page" onChange={handleQuery} />
-                    </div>
+                    </div> */}
                     <div className="input-group">
                         <div className="input-group-text py-2">
                             <span className="my-0">photographer</span>

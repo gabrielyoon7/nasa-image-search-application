@@ -30,7 +30,6 @@ export default () => {
     const [query, setQuery] = useState(defaultQuery); //고급쿼리
     const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
 
-
     useEffect(() => {
         initData();
     }, [])
@@ -41,6 +40,7 @@ export default () => {
             ['q']: 'america'
         });
         await setData(tempData);
+        setLoaded(true);
     }
 
     const searchData = async (query) => {
@@ -57,9 +57,9 @@ export default () => {
             return data
         }
         let queryForURL = ''
-        console.log(query)
+        // console.log(query)
         Object.keys(query).map((el) => { query[el] !== '' && (queryForURL += ('&' + el + '=' + query[el])) })
-        console.log('queryForURL : ' + queryForURL)
+        // console.log('queryForURL : ' + queryForURL)
         if (queryForURL === '') {
             alert('1개 항목 이상 입력해야 합니다.')
             return data
@@ -72,7 +72,7 @@ export default () => {
         let temp = [];
         await axios.get(url)
             .then((response) => {
-                console.log(response.data.collection.items)
+                // console.log(response.data.collection.items)
                 temp = (response.data.collection.items)
             }).catch(function (error) {
                 console.log(error.response.status)
@@ -111,7 +111,7 @@ export default () => {
     };
 
     const search = async () => {
-        // setLoaded(false); //검색 버튼을 누르는 경우, 로드 중임을 알리기위해 false로 변경
+        setLoaded(false); //검색 버튼을 누르는 경우, 로드 중임을 알리기위해 false로 변경
         setData([]); //새 검색 결과에는 어차피 데이터를 비워야 하기 때문에 일단 삭제
         if (query === '') { //쿼리가 빈 상태로 검색하려는 경우 초기값으로 되돌려줌
             setQuery({
@@ -121,6 +121,7 @@ export default () => {
         }
         const tempData = await searchData(query);
         await setData(tempData);
+        setLoaded(true);
         setQuery(defaultQuery); //검색 끝났으니 쿼리 비우기
     }
 
@@ -163,8 +164,6 @@ export default () => {
                 <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     {/* 상세 검색 모달 */}
                     <SearchModal
-                        setData={setData}
-                        setLoaded={setLoaded}
                         query={query}
                         setQuery={setQuery}
                         search={search}

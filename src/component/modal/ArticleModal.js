@@ -7,20 +7,25 @@ export default (props) => {
         return year + '-' + month + '-' + day
     }
     const data = props.selectedData;
-    
+
     const localStorage = window.localStorage;
     const saveBookmark = (newData) => {
+        console.log(JSON.stringify(newData))
         const prev = localStorage.getItem("bookmark")
-        if(prev==null){
-            console.log('it is empty');
-            localStorage.setItem("bookmark",JSON.stringify([].concat(newData)));
+        if (prev == null) {
+            localStorage.setItem("bookmark", JSON.stringify([].concat(newData)));
             props.setBookmarks([].concat(newData));
         }
-        else{
-            console.log('something is pushed')
-            localStorage.setItem('bookmark',JSON.stringify(JSON.parse(prev).concat(newData)));
-            props.setBookmarks(JSON.parse(prev).concat(newData));
+        else {
+            if (prev.includes(JSON.stringify(newData))) {
+                alert('Already Exists')
+            }
+            else {
+                localStorage.setItem('bookmark', JSON.stringify(JSON.parse(prev).concat(newData)));
+                props.setBookmarks(JSON.parse(prev).concat(newData));
+            }
         }
+
     }
     return (
         <>
@@ -55,7 +60,7 @@ export default (props) => {
                             </div>
                             <div className="modal-footer border-top-0 d-flex justify-content-between">
                                 <button type="button" className="col btn btn-lg btn-outline-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="col btn btn-lg btn-outline-success w-100 mx-1" data-bs-dismiss="modal" onClick={()=>saveBookmark(data)}>Bookmark</button>
+                                <button type="button" className="col btn btn-lg btn-outline-success w-100 mx-1" data-bs-dismiss="modal" onClick={() => saveBookmark(data)}>Bookmark</button>
                             </div>
                         </>
                     }

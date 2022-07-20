@@ -160,6 +160,7 @@ export default () => {
     }, [page]) //페이지가 변동(증가)하는 경우
 
     const handleScroll = (e) => {
+        handleResize();
         const { offsetHeight, scrollTop, scrollHeight } = e.target
         if (isLoaded == true && (offsetHeight + scrollTop === scrollHeight)) { //스크롤이 바닥에 닿았을 때. (단, 로드 상태가 false 시 현재 이미 요청중이므로 true에만 요청을 허가한다.. )
             setLoaded(false);

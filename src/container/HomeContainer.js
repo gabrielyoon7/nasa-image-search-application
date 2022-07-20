@@ -27,6 +27,7 @@ export default () => {
 
     const [isLoaded, setLoaded] = useState(false); //페이지 로딩 시도 시, spinner롤 보여주기 위함 + 무한 스크롤 시 불필요한 추가 요청을 방지하는 기능도 함
     const [data, setData] = useState([]); //받아온 데이터를 담을 리스트
+    const [prevDataTemp, setPrevDataTemp] = useState([]); //마지막으로 받은 데이터의 임시 저장소
     const [query, setQuery] = useState(defaultQuery); //고급쿼리
     const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
     const [page, setPage] = useState(1); //요청 페이지 관리용
@@ -36,6 +37,10 @@ export default () => {
     }, [])
 
     const initData = async () => {
+        setQuery({
+            ...defaultQuery,
+            ['q']: 'america'
+        })
         const tempData = await searchData({
             ...defaultQuery,
             ['q']: 'america'
@@ -52,10 +57,12 @@ export default () => {
         // else 
         if (query['year_start'] !== '' && !((Number(query['year_start']) >= 1000 && (Number(query['year_start']) <= 9999)))) {
             alert('YYYY 형태여야 합니다.')
+            // console.log('YYYY 형태여야 합니다.')
             return data
         }
         else if (query['year_end'] !== '' && !((Number(query['year_end']) >= 1000 && (Number(query['year_end']) <= 9999)))) {
             alert('YYYY 형태여야 합니다.')
+            console.log('YYYY 형태여/야 합니다.')
             return data
         }
         let queryForURL = ''
@@ -63,7 +70,6 @@ export default () => {
         Object.keys(query).map((el) => { query[el] !== '' && (queryForURL += ('&' + el + '=' + query[el])) })
         // console.log('queryForURL : ' + queryForURL)
         if (queryForURL === '') {
-            // alert('1개 항목 이상 입력해야 합니다.')
             return data
         }
         // if (queryForURL.includes('&page') && queryForURL.split('&').length - 1 === 1) {
@@ -76,6 +82,7 @@ export default () => {
             .then((response) => {
                 // console.log(response.data.collection.items)
                 temp = (response.data.collection.items)
+                setPrevDataTemp(temp);
             }).catch(function (error) {
                 console.log(error.response.status)
                 switch (error.response.status) {
@@ -130,8 +137,15 @@ export default () => {
             setLoaded(true);    
         }
 
-        console.log('page' + page)
-        moreImages()
+        // console.log('page' + page)
+        // console.log('prevDataTemp' + prevDataTemp.length)
+        if(prevDataTemp.length>0 && prevDataTemp.length<100){
+            console.log('no more data')
+            setLoaded(true);
+        }
+        else{
+            moreImages()
+        }
     }, [page]) //페이지가 변동(증가)하는 경우
 
     const handleScroll = (e) => {

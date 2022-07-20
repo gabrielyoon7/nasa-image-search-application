@@ -50,6 +50,10 @@ export default (props) => {
             alert('1개 항목 이상 입력해야 합니다.')
             return
         }
+        if(query.includes('&page')&&query.split('&').length-1===1){
+            alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
+            return
+        }
         props.setLoaded(false);
         props.setData([]);
         const url = 'https://images-api.nasa.gov/search?'+query;

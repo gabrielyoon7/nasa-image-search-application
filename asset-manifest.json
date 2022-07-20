@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/nasa-image-search-application/static/css/main.c6f0e4ad.css",
-    "main.js": "/nasa-image-search-application/static/js/main.01287f79.js",
+    "main.css": "/nasa-image-search-application/static/css/main.4ecf1a07.css",
+    "main.js": "/nasa-image-search-application/static/js/main.d844994d.js",
     "static/js/787.c560b260.chunk.js": "/nasa-image-search-application/static/js/787.c560b260.chunk.js",
     "static/media/bootstrap-icons.woff?": "/nasa-image-search-application/static/media/bootstrap-icons.e559bf06bc84fd9525e6.woff",
     "static/media/bootstrap-icons.woff2?": "/nasa-image-search-application/static/media/bootstrap-icons.ea98e12d2d58747f9fc5.woff2",
     "static/media/logo.svg": "/nasa-image-search-application/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/nasa-image-search-application/index.html",
-    "main.c6f0e4ad.css.map": "/nasa-image-search-application/static/css/main.c6f0e4ad.css.map",
-    "main.01287f79.js.map": "/nasa-image-search-application/static/js/main.01287f79.js.map",
+    "main.4ecf1a07.css.map": "/nasa-image-search-application/static/css/main.4ecf1a07.css.map",
+    "main.d844994d.js.map": "/nasa-image-search-application/static/js/main.d844994d.js.map",
     "787.c560b260.chunk.js.map": "/nasa-image-search-application/static/js/787.c560b260.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c6f0e4ad.css",
-    "static/js/main.01287f79.js"
+    "static/css/main.4ecf1a07.css",
+    "static/js/main.d844994d.js"
   ]
 }

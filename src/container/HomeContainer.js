@@ -44,7 +44,7 @@ export default () => {
         const tempData = await searchData({
             ...defaultQuery,
             ['q']: 'america'
-        },1);
+        }, 1);
         await setData(tempData);
         setLoaded(true);
     }
@@ -76,7 +76,7 @@ export default () => {
         //     alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
         //     return data
         // }
-        const url = 'https://images-api.nasa.gov/search?' + queryForURL + '&page='+page;
+        const url = 'https://images-api.nasa.gov/search?' + queryForURL + '&page=' + page;
         let temp = [];
         await axios.get(url)
             .then((response) => {
@@ -134,16 +134,16 @@ export default () => {
             setLoaded(false); //검색 버튼을 누르는 경우, 로드 중임을 알리기위해 false로 변경
             const tempData = await searchData(query, page);
             await setData([...data, ...tempData]);
-            setLoaded(true);    
+            setLoaded(true);
         }
 
         // console.log('page' + page)
         // console.log('prevDataTemp' + prevDataTemp.length)
-        if(prevDataTemp.length>0 && prevDataTemp.length<100){
+        if (prevDataTemp.length > 0 && prevDataTemp.length < 100) {
             console.log('no more data')
             setLoaded(true);
         }
-        else{
+        else {
             moreImages()
         }
     }, [page]) //페이지가 변동(증가)하는 경우
@@ -175,7 +175,7 @@ export default () => {
             </header>
             <div className="">
                 <div className="container">
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch mb-5">
                         {data && data.map((image) =>
                             <ImageCard
                                 key={Math.random()}

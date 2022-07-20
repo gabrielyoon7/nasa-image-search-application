@@ -1,8 +1,12 @@
+import { clear } from "@testing-library/user-event/dist/clear";
 import ListCard from "../card/ListCard";
 
 export default (props) => {
-    const localStorage = window.localStorage;
-    const bookmarks = JSON.parse(localStorage.getItem("bookmark"))
+    const clear = () => {
+        const localStorage = window.localStorage;
+        localStorage.clear()
+        props.setBookmarks([])
+    }
     return (
         <>
             <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -16,28 +20,23 @@ export default (props) => {
                             <div className="modal-body py-0">
                                 <div className="card-body">
                                     {
-                                        bookmarks &&
-                                        (
-                                            bookmarks.length == 0
-                                                ?
-                                                <div>저장된 북마크가 없습니다.</div>
-                                                :
-                                                bookmarks.map((image) => (
-                                                    <ListCard
-                                                        key={Math.random()}
-                                                        image={image}
-                                                        setSelectedData={props.setSelectedData}
-                                                    />
-                                                )
-                                                )
-
-                                        )
+                                        props.bookmarks.length > 0
+                                            ?
+                                            props.bookmarks.map((image) => (
+                                                <ListCard
+                                                    key={Math.random()}
+                                                    image={image}
+                                                    setSelectedData={props.setSelectedData}
+                                                />
+                                            ))
+                                            :
+                                            <div>Nothing is Here</div>
                                     }
                                 </div>
                             </div>
                             <div className="modal-footer border-top-0 d-flex justify-content-between">
                                 <button type="button" className="col btn btn-lg btn-outline-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="col btn btn-lg btn-warning w-100 mx-1" onClick={() => localStorage.clear()}>Clear</button>
+                                <button type="button" className="col btn btn-lg btn-warning w-100 mx-1" data-bs-dismiss="modal" onClick={() => clear()}>Clear</button>
                             </div>
                         </>
                     }

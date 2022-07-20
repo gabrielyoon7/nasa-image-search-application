@@ -13,12 +13,13 @@ export default (props) => {
         const prev = localStorage.getItem("bookmark")
         if(prev==null){
             console.log('it is empty');
-            JSON.parse(localStorage.getItem('key이름'));
             localStorage.setItem("bookmark",JSON.stringify([].concat(newData)));
+            props.setBookmarks([].concat(newData));
         }
         else{
             console.log('something is pushed')
             localStorage.setItem('bookmark',JSON.stringify(JSON.parse(prev).concat(newData)));
+            props.setBookmarks(JSON.parse(prev).concat(newData));
         }
     }
     return (

@@ -32,10 +32,22 @@ export default () => {
     const [query, setQuery] = useState(defaultQuery); //고급쿼리
     const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
     const [page, setPage] = useState(1); //요청 페이지 관리용
+    const [bookmarks, setBookmarks] = useState([]);
 
     useEffect(() => {
-        initData();
-    }, []) //초기데이터 수신
+        findBookMarks(); //초기 북마크 찾기
+        initData(); //초기데이터 수신
+    }, [])
+
+    const findBookMarks=  () => {
+        const items = localStorage.getItem("bookmark");
+        if(items==null){
+            setBookmarks([]);
+        }
+        else{
+            setBookmarks(JSON.parse(items));
+        }
+    }
 
     const initData = async () => {
         setQuery({ //초기 쿼리로 q를 지정해줌 (바로 사용하는 것은 아니고, 나중 검색을 위한 작업)
@@ -220,6 +232,7 @@ export default () => {
                         {/* 기사 보여주는 모달 */}
                         <ArticleModal
                             selectedData={selectedData}
+                            setBookmarks={setBookmarks}
                         />
                     </div>
                     <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -231,11 +244,10 @@ export default () => {
                         />
                     </div>
                     <div className="modal fade" id="bookmark-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        {/* 상세 검색 모달 */}
+                        {/* 북마크 모달 */}
                         <BookmarkModal
-                            query={query}
-                            setQuery={setQuery}
-                            search={search}
+                            bookmarks={bookmarks}
+                            setBookmarks={setBookmarks}
                             setSelectedData={setSelectedData}
                         />
                     </div>

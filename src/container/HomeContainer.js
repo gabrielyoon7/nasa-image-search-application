@@ -28,6 +28,8 @@ export default () => {
     const [isLoaded, setLoaded] = useState(false); //페이지 로딩 시도 시, spinner롤 보여주기 위함 + 무한 스크롤 시 불필요한 추가 요청을 방지하는 기능도 함
     const [data, setData] = useState([]); //받아온 데이터를 담을 리스트
     const [query, setQuery] = useState(defaultQuery); //고급쿼리
+    const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
+
 
     useEffect(() => {
         initData();
@@ -140,7 +142,24 @@ export default () => {
                 <hr />
             </header>
             <div className="">
-                <button onClick={() => console.log(JSON.stringify(data))}>dd</button>
+                <div className="container">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+                        {data && data.map((image) =>
+                            <ImageCard
+                                key={Math.random()}
+                                image={image}
+                                setSelectedData={setSelectedData}
+                            />)}
+                    </div>
+                </div>
+                <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    {/* 기사 보여주는 모달 */}
+                    <ArticleModal selectedData={selectedData} />
+                </div>
+                <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    {/* 상세 검색 모달 */}
+
+                </div>
             </div>
         </div>
     )

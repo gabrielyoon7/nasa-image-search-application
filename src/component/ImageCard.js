@@ -1,4 +1,6 @@
-export default (props) => {
+import React from "react";
+
+const ImageCard = (props) => {
     const data = props.image.data[0]; //잠재적인 문제 발생 가능
     let links = '#'; //잠재적인 문제 발생 가능
     if (data.media_type == 'image') {
@@ -38,3 +40,5 @@ export default (props) => {
         </>
     )
 }
+
+export default React.memo(ImageCard);

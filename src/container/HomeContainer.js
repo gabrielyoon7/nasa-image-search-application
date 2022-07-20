@@ -19,6 +19,7 @@ export default () => {
     }, [])
 
     const searchData = async () => {
+        setPage(1)
         await axios.get('https://images-api.nasa.gov/search?q=' + query)
             .then((response) => {
                 setData(response.data.collection.items);
@@ -70,41 +71,39 @@ export default () => {
         setQuery('');
     }
 
-    // const [page, setPage] = useState(1)
+    const [page, setPage] = useState(1);
 
-    // useEffect(() => {
-    //     const fetchTodos = async () => {
-    //         setLoaded(false);
-    //         try {
-    //             await axios.get('https://images-api.nasa.gov/search?q=' + query + '&page=' + page)
-    //                 .then((response) => {
-    //                     setData([...data, ...response.data.collection.items]);
-    //                     setLoaded(true);
-    //                     // console.log(JSON.stringify(response))
-    //                 }).catch(function (error) {
+    useEffect(() => {
+        const moreImages = async () => {
+            try {
+                await axios.get('https://images-api.nasa.gov/search?q=' + query + '&page=' + page)
+                    .then((response) => {
+                        setData([...data, ...response.data.collection.items]);
+                        setLoaded(true);
+                        // console.log(JSON.stringify(response))
+                    }).catch(function (error) {
 
-    //                 });
-    //         } catch (e) {
+                    });
+            } catch (e) {
 
-    //         }
-    //     }
-    //     console.log(page)
-    //     fetchTodos()
-    // }, [page])
+            }
+        }
+        console.log('page'+page)
+        moreImages()
+    }, [page])
 
     const handleScroll = (e) => {
-        // const { offsetHeight, scrollTop, scrollHeight } = e.target
-        // console.log(e.target);
-        // console.log(offsetHeight);
-        // console.log(scrollTop);
+        const { offsetHeight, scrollTop, scrollHeight } = e.target
+        // console.log('(offsetHeight : '+offsetHeight+') + (scrollTop : '+scrollTop+') = '+(offsetHeight+scrollTop));
         // console.log(scrollHeight);
-        // if (offsetHeight + scrollTop === scrollHeight) {
-        //     setPage(data.length + 1)
-        // }
+        if (isLoaded==true && (offsetHeight + scrollTop === scrollHeight)) {
+            // alert('it is end')
+            setLoaded(false);
+            setPage(page + 1)
+        }
     }
-
     return (
-        <>
+        <div style={{"height" : window.screen.height+"px", "overflowY":"auto"}} onScroll={handleScroll}>
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
                     <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
@@ -122,7 +121,7 @@ export default () => {
             </header>
             <div className="">
                 <div className="container">
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch" onScroll={handleScroll}>
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
                         {data && data.map((image) => <ImageCard key={Math.random()} image={image} setSelectedData={setSelectedData} />)}
                     </div>
                     {/* <div>
@@ -144,6 +143,6 @@ export default () => {
                     <SearchModal setData={setData} setLoaded={setLoaded}/>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

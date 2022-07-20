@@ -46,15 +46,15 @@ export default () => {
     const searchData = async (query) => {
         if (query['page'] !== '' && !(Number(query['page']) >= 1)) {
             alert('페이지는 반드시 1 이상이어야 합니다.')
-            return
+            return data
         }
         else if (query['year_start'] !== '' && !((Number(query['year_start']) >= 1000 && (Number(query['year_start']) <= 9999)))) {
             alert('YYYY 형태여야 합니다.')
-            return
+            return data
         }
         else if (query['year_end'] !== '' && !((Number(query['year_end']) >= 1000 && (Number(query['year_end']) <= 9999)))) {
             alert('YYYY 형태여야 합니다.')
-            return
+            return data
         }
         let queryForURL = ''
         console.log(query)
@@ -62,11 +62,11 @@ export default () => {
         console.log('queryForURL : ' + queryForURL)
         if (queryForURL === '') {
             alert('1개 항목 이상 입력해야 합니다.')
-            return
+            return data
         }
         if (queryForURL.includes('&page') && queryForURL.split('&').length - 1 === 1) {
             alert('page를 제외한 1개 항목 이상 입력해야 합니다.')
-            return
+            return data
         }
         const url = 'https://images-api.nasa.gov/search?' + queryForURL;
         let temp = [];
@@ -152,13 +152,23 @@ export default () => {
                             />)}
                     </div>
                 </div>
+                {
+                    // 추가 리스트가 불러와짐을 여기서 보여주기 위함... 무한 스크롤 시 바닥에 spinner를 붙이는 효과도 있음
+                    isLoaded ? <div></div> : <LoadingSpinner />
+                }
                 <div className="modal fade" id="article-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     {/* 기사 보여주는 모달 */}
                     <ArticleModal selectedData={selectedData} />
                 </div>
                 <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     {/* 상세 검색 모달 */}
-
+                    <SearchModal
+                        setData={setData}
+                        setLoaded={setLoaded}
+                        query={query}
+                        setQuery={setQuery}
+                        search={search}
+                    />
                 </div>
             </div>
         </div>

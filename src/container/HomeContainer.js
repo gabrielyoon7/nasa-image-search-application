@@ -1,8 +1,8 @@
 import axios from "axios"
 import { useEffect, useRef, useState } from "react"
-import ImageCard from "../component/ImageCard"
-import LoadingSpinner from "../component/LoadingSpinner"
-import Log from "../component/Log"
+import ImageCard from "../component/card/ImageCard"
+import LoadingSpinner from "../component/common/LoadingSpinner"
+import Log from "../component/common/Log"
 import { Link } from 'react-router-dom';
 import ArticleModal from "../component/modal/ArticleModal"
 import SearchModal from "../component/modal/SearchModal"
@@ -236,6 +236,7 @@ export default () => {
                             query={query}
                             setQuery={setQuery}
                             search={search}
+                            setSelectedData={setSelectedData}
                         />
                     </div>
                 </div>

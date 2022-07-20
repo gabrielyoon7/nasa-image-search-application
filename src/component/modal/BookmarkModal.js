@@ -1,4 +1,4 @@
-import ListCard from "../ListCard";
+import ListCard from "../card/ListCard";
 
 export default (props) => {
     const localStorage = window.localStorage;
@@ -15,12 +15,22 @@ export default (props) => {
                             </div>
                             <div className="modal-body py-0">
                                 <div className="card-body">
-                                    {bookmarks && bookmarks.map((image)=><ListCard key={Math.random()} image={image}/>)}
+                                    {
+                                        bookmarks &&
+                                        bookmarks.map((image) => (
+                                            <ListCard
+                                                key={Math.random()}
+                                                image={image}
+                                                setSelectedData={props.setSelectedData}
+                                            />
+                                        )
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="modal-footer border-top-0 d-flex justify-content-between">
                                 <button type="button" className="col btn btn-lg btn-outline-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="col btn btn-lg btn-warning w-100 mx-1" onClick={()=>localStorage.clear()}>Clear</button>
+                                <button type="button" className="col btn btn-lg btn-warning w-100 mx-1" onClick={() => localStorage.clear()}>Clear</button>
                             </div>
                         </>
                     }

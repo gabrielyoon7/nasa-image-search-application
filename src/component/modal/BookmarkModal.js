@@ -17,13 +17,20 @@ export default (props) => {
                                 <div className="card-body">
                                     {
                                         bookmarks &&
-                                        bookmarks.map((image) => (
-                                            <ListCard
-                                                key={Math.random()}
-                                                image={image}
-                                                setSelectedData={props.setSelectedData}
-                                            />
-                                        )
+                                        (
+                                            bookmarks.length == 0
+                                                ?
+                                                <div>저장된 북마크가 없습니다.</div>
+                                                :
+                                                bookmarks.map((image) => (
+                                                    <ListCard
+                                                        key={Math.random()}
+                                                        image={image}
+                                                        setSelectedData={props.setSelectedData}
+                                                    />
+                                                )
+                                                )
+
                                         )
                                     }
                                 </div>

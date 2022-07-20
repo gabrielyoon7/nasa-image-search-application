@@ -1,4 +1,11 @@
 export default (props) => {
+    const yymmdd = (t) => {
+        const date = new Date(Date.parse(t))
+        const year = date.getFullYear()
+        const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
+        const day = date.getDay() < 10 ? '0' + date.getDay() : date.getDay()
+        return year + '-' + month + '-' + day
+    }
     return (
         <>
             {
@@ -6,9 +13,9 @@ export default (props) => {
                 <a href="#" className="list-group-item list-group-item-action py-3 lh-sm">
                     <div className="d-flex w-100 align-items-center justify-content-between">
                         <strong className="mb-1">{props.image.data[0].title}</strong>
-                        <small className="text-muted">Mon</small>
+                        <small className="text-muted">{yymmdd(props.image.data[0].date_created)}</small>
                     </div>
-                    <div className="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                    <div className="col-10 mb-1 small">{props.image.data[0].description}</div>
                 </a>
             }
         </>

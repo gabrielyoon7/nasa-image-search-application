@@ -19,8 +19,8 @@ export default (props) => {
                                 </div>
                             </div>
                             <div className="modal-footer border-top-0 d-flex justify-content-between">
-                                <button type="button" className="col btn btn-lg btn-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="col btn btn-lg btn-success w-100 mx-1" onClick={()=>localStorage.clear()}>Clear</button>
+                                <button type="button" className="col btn btn-lg btn-outline-danger w-100 mx-1" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="col btn btn-lg btn-warning w-100 mx-1" onClick={()=>localStorage.clear()}>Clear</button>
                             </div>
                         </>
                     }

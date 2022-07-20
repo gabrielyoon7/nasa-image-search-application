@@ -1,5 +1,5 @@
 .text-wrap {
-    height: 70px;
+    height: 69px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -17,6 +17,10 @@
 
 .card-size {
     height: 450px;
+}
+
+.caption-width{
+    width: 150px;
 }
 
 body::-webkit-scrollbar {

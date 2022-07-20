@@ -9,10 +9,28 @@ import SearchModal from "./modal/SearchModal"
 
 export default () => {
 
+    const defaultQuery = {
+        q: '',
+        center: '',
+        description: '',
+        description_508: '',
+        keywords: '',
+        location: '',
+        media_type: '',
+        nasa_id: '',
+        page: '',
+        photographer: '',
+        secondary_creator: '',
+        title: '',
+        year_start: '',
+        year_end: '',
+    }
+
     const [isLoaded, setLoaded] = useState(false); //페이지 로딩 시도 시, spinner롤 보여주기 위함 + 무한 스크롤 시 불필요한 추가 요청을 방지하는 기능도 함
     const [data, setData] = useState([]); //받아온 데이터를 담을 리스트
     const [selectedData, setSelectedData] = useState(null); //사용자가 선택한 카드의 데이터를 담아줄 곳
     const [query, setQuery] = useState('america'); //쿼리
+    const [advancedQuery, setAdvancedQuery] = useState(defaultQuery); //고급쿼리
     const [page, setPage] = useState(1); //요청 페이지 관리용
 
     useEffect(() => {
@@ -95,11 +113,12 @@ export default () => {
             setPage(page + 1) // 다음 페이지로 변경
         }
     }
+
     return (
         <div style={{ "height": window.screen.height + "px", "overflowY": "scroll" }} onScroll={handleScroll}>
             <header className="py-3 mb-4">
                 <div className="container d-flex flex-wrap justify-content-center">
-                    <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                    <Link to="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none" onClick={()=>window.location.reload()}>
                         <span className="fs-4">🚀 NASA Image Search Application</span>
                     </Link>
                     <div className="col-12 col-lg-auto mb-3 mb-lg-0">
@@ -128,7 +147,12 @@ export default () => {
                 </div>
                 <div className="modal fade" id="search-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     {/* 상세 검색 모달 */}
-                    <SearchModal setData={setData} setLoaded={setLoaded} />
+                    <SearchModal
+                     setData={setData}
+                     setLoaded={setLoaded} 
+                     advancedQuery={advancedQuery}
+                     setAdvancedQuery={setAdvancedQuery}
+                     />
                 </div>
             </div>
         </div>
